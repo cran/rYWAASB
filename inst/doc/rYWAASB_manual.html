@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Ali Arminian" />
+
+<meta name="date" content="2024-08-23" />
+
+<title>rYWAASB-vignette</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">rYWAASB-vignette</h1>
+<h4 class="author">Ali Arminian</h4>
+<h4 class="date">2024-08-23</h4>
+
+
+<div id="TOC">
+true
+</div>
+
+<div id="introduction" class="section level2">
+<h2>1-Introduction</h2>
+<p><strong>Stability analysis</strong> is crucial in plant breeding to
+select superior genotypes that perform consistently across different
+environments. Several models and methods have been developed for this
+purpose, including Additive Main Effect and Multiplicative Interaction
+(<em>AMMI</em>), Weighted Average of Absolute Scores (<em>WAASB</em>),
+and Genotype plus Genotype-Environment (<em>GGE</em>) interactions in
+multi-environmental trials (<em>MET</em>) <span class="citation">(<a href="#ref-mishra2024">Mishra et al. 2024</a>; <a href="#ref-sakata2021">Sakata 2021</a>; <a href="#ref-pour2022">Pour-Aboughadareh et al. 2022</a>; <a href="#ref-danakumara2023">Danakumara et al. 2023</a>)</span>. These
+analyses help breeders identify genotypes with stable performance and
+adaptability under varying conditions, leading to optimal yield
+stability and successful crop production. Utilizing these stability
+analysis tools, breeders can navigate the complexities of
+genotype-environment interactions and select genotypes that consistently
+excel across different locations and seasons, ensuring the development
+of resilient and high-performing plant varieties <span class="citation">(<a href="#ref-swarup2014">SWARUP and SINGH
+2014</a>)</span>.</p>
+</div>
+<div id="the-waasb-object" class="section level2">
+<h2>The WAASB object</h2>
+<p>By combining the strengths of AMMI for assessing stability and BLUP
+for prediction accuracy, breeders can effectively select genotypes that
+consistently perform well across different environmental conditions.
+This is crucial for developing sustainable agricultural systems and
+improving food security. To estimate the stability index of genotypes in
+multi-environment trials (METs), the <strong>WAASB</strong> index
+(weighted average of the absolute values obtained from the singular
+value decomposition of the BLUP matrix for the genotype by environment
+interaction effects, generated by a linear mixed-effects model) is
+calculated using the formula provided by <span class="citation">(<a href="#ref-olivoto2019">Olivoto et al. 2019</a>)</span>. They suggest
+that the function <code>*waasb()*</code> computes the Weighted Average
+of the Absolute Scores considering all possible IPCA from the Singular
+Value Decomposition of the BLUPs for genotype-vs-environment interaction
+effects obtained by an Linear Mixed-effect Model <span class="citation">(<a href="#ref-olivoto2019">Olivoto et al.
+2019</a>)</span> , as follows:</p>
+<p><span class="math display">\[
+        WAASB_i  =
+        \sum_{k = 1}^{p} |IPCA_{ik} \times EP_k|/ \sum_{k = 1}^{p}EP_k
+\]</span> where <span class="math inline">\(WAASB_i\)</span> is the
+weighted average of absolute scores of the <em>i</em>th genotype; <span class="math inline">\(IPCA_{ik}\)</span> is the scores of the
+<em>i</em>th genotype in the <em>k</em>th IPCA; and <span class="math inline">\(EP_k\)</span> is the explained variance of the
+<em>k</em>th PCA for <span class="math inline">\(k = 1,2,..,p\)</span>,
+<span class="math inline">\(p = min(g-1; e-1)\)</span>.</p>
+<p>Interestingly our new index (<em>rYWAASB</em>) gives results which
+can be compared with <em>WAASBY</em> index provided by Olivoto et al.
+<span class="citation">(<a href="#ref-olivoto2019">Olivoto et al.
+2019</a>)</span>.</p>
+<p>For working with <em>rYWAASB</em> package, firstly, if the
+<em>metan</em> or <strong>rYWAASB</strong> packages are not already
+installed, they should be installed on the system. The analysis requires
+the following packages to be installed:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## To extract *WAASB* index values and construct a biplot using `Y*WAASB` or Y*WAASB.</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(metan)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## For graphical displays</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(graphics)</span></code></pre></div>
+<p>The codes provided below form the <em>metan</em> package, allow you
+to access the <em>WAASB</em> index values, rankings, and other
+information for genotypes (or entries) in general.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>waasb_model <span class="ot">&lt;-</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">waasb</span>(data_ge,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>        <span class="at">env =</span> ENV,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>        <span class="at">gen =</span> GEN,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>        <span class="at">rep =</span> REP,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>        <span class="at">resp =</span> <span class="fu">everything</span>(),</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>        <span class="at">random =</span> <span class="st">&quot;gen&quot;</span>, <span class="co">#Default</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>        <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="co">#Default</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co"># Evaluating trait GY |======================                      | 50% 00:00:02 Evaluating trait HM |============================================| 100% 00:00:03 </span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># Method: REML/BLUP</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Random effects: GEN, GEN:ENV</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co"># Fixed effects: ENV, REP(ENV)</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co"># Denominador DF: Satterthwaite&#39;s method</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co"># P-values for Likelihood Ratio Test of the analyzed traits</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#     model       GY       HM</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#  COMPLETE       NA       NA</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#       GEN 1.11e-05 5.07e-03</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#   GEN:ENV 2.15e-11 2.27e-15</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co"># All variables with significant (p &lt; 0.05) genotype-vs-environment interaction</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>data <span class="ot">&lt;-</span> waasb_model<span class="sc">$</span>GY<span class="sc">$</span>model</span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="fu">print</span>(data)</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co"># # A tibble: 24 × 22</span></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="co">#    type  Code      Y     PC1     PC2     PC3     PC4     PC5     PC6     PC7</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="co">#    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="co">#  1 GEN   G1     2.60  0.246  -0.0482 -0.0314 -0.0513 -0.146  -0.419   0.117 </span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="co">#  2 GEN   G10    2.47 -0.819  -0.421  -0.128  -0.266  -0.116   0.0575  0.0480</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="co">#  3 GEN   G2     2.74  0.119   0.154  -0.585   0.376  -0.0810  0.202   0.0975</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="co">#  4 GEN   G3     2.96  0.0437 -0.0793  0.187   0.138  -0.175   0.155  -0.370 </span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a><span class="co">#  5 GEN   G4     2.64 -0.243   0.393  -0.0723  0.113  -0.113  -0.279  -0.126 </span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a><span class="co">#  6 GEN   G5     2.54 -0.256   0.206   0.193   0.145   0.365   0.0546  0.187 </span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a><span class="co">#  7 GEN   G6     2.53 -0.0753  0.195   0.445   0.192   0.0685  0.0353  0.0180</span></span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a><span class="co">#  8 GEN   G7     2.74  0.247   0.458  -0.166  -0.565   0.172   0.103  -0.0930</span></span>
+<span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a><span class="co">#  9 GEN   G8     3.00  0.404  -0.166   0.259  -0.136  -0.310   0.175   0.222 </span></span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="co"># 10 GEN   G9     2.51  0.334  -0.692  -0.102   0.0537  0.335  -0.0845 -0.0991</span></span>
+<span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a><span class="co"># # ℹ 14 more rows</span></span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a><span class="co"># # ℹ 12 more variables: PC8 &lt;dbl&gt;, PC9 &lt;dbl&gt;, WAASB &lt;dbl&gt;, PctResp &lt;dbl&gt;,</span></span>
+<span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a><span class="co"># #   PctWAASB &lt;dbl&gt;, wRes &lt;dbl&gt;, wWAASB &lt;dbl&gt;, OrResp &lt;dbl&gt;, OrWAASB &lt;dbl&gt;,</span></span>
+<span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a><span class="co"># #   OrPC1 &lt;dbl&gt;, WAASBY &lt;dbl&gt;, OrWAASBY &lt;dbl&gt;</span></span></code></pre></div>
+<p>The output generated by the <em>waasb()</em> function is very similar
+to that generated by the <em>waas()</em> function. The main difference
+is that the singular value decomposition is based on the BLUP for GEI
+effects matrix. For more information, refer to <span class="citation">(<a href="#ref-olivoto2019">Olivoto et al.
+2019</a>)</span>.</p>
+<p>Several indexes have been developed to identify genotypes that
+exhibit both high performance and stability in plant breeding programs.
+One example is the <em>kangranksum</em> index, which was developed by
+Kang <span class="citation">(<a href="#ref-kang1988">Kang
+1988</a>)</span>. This index combines yield and stability ranks based on
+the <em>Shukla</em> stability index. Olivoto <span class="citation">(<a href="#ref-olivoto2019">Olivoto et al. 2019</a>)</span>, on the other
+hand, created the <em>WAASBY</em> index by assigning weights to yield
+and stability. Our rYWAASB index can be compared to these earlier
+indexes, as it follows a similar computational approach. However, our
+index (<em>rYWAASB</em>) is a powerful tool, because it incorporates a
+trait and <em>WAASB</em> rankings in the process.</p>
+</div>
+<div id="how-to-apply-the-package" class="section level2">
+<h2>2- How to apply the package</h2>
+<p>First, let’s examine the <code>Y*WAASB</code> biplot generated by the
+<em>metan</em> package. This will allow us to compare the results of the
+<em>rYWAASB</em> package with the <code>Y*WAASB</code> biplot. In the
+<code>Y*WAASB</code> or <code>GY*WAASB</code> biplot proposed by <span class="citation">(<a href="#ref-olivoto2019">Olivoto et al.
+2019</a>)</span> (Fig. 1), the quadrants illustrate the stability and
+trait patterns (specifically, the grain yield of oat genotypes in the
+data_ge dataset) as follows:</p>
+<ul>
+<li>Quadrant I: This quadrant consists of unstable genotypes or
+environments that have high discrimination ability but productivity
+below the grand mean.</li>
+<li>Quadrant II: This quadrant includes unstable genotypes with
+productivity above the grand mean.</li>
+<li>Quadrant III: This quadrant comprises low productive but stable
+genotypes.</li>
+<li>Quadrant IV: This quadrant contains productive and broadly adapted
+genotypes.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">plot_scores</span>(waasb_model, <span class="at">type =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="data:image/png;base64,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" alt="Fig. 1: Y*WAASB biplot of &#39;metan&#39; package built-in oat data" />
+<p class="caption">
+Fig. 1: Y*WAASB biplot of ‘metan’ package built-in oat data
+</p>
+</div>
+<p>In this section, we will utilize the built-in data <em>maize</em> to
+generate ranking scores for different genotypes, along with their
+corresponding plots. For further details, please refer to the
+<em>?maize</em> documentation. It is also possible to use other datasets
+as long as they contain the following columns: genotype, trait, and
+WAASB index for genotypes. To understand how the HTML tables were
+created, please refer to the <a href="#rendering">Rendering engine</a>
+section.</p>
+<p>Firstly, the <strong>rYWAASB</strong> package is installed if it is
+not already installed.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;rYWAASB&quot;</span>)){</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;rYWAASB&quot;</span>) <span class="co"># call the package</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># Loading required package: rYWAASB</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co"># rYWAASB 0.1 loaded</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(rYWAASB)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">data</span>(maize)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">head</span>(maize)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># # A tibble: 6 × 3</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#   GEN           Y WAASB</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># 1 Dracma     262. 0.811</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># 2 DKC6630    284. 2.20 </span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># 3 NS770      243. 0.327</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># 4 89 MAY 70  259. 1.96 </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co"># 5 BOLSON     253. 1.15 </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co"># 6 Sy Hydro   244. 0.974</span></span></code></pre></div>
+</div>
+<div id="applying-the-rywaasb-package.-ranking-table" class="section level2">
+<h2>Applying the <strong>rYWAASB</strong> package. Ranking table:</h2>
+<p>We recommend that users address (handle/overcome/substitute) any
+missing data in their inputs before proceeding with analyses. This is
+because the rank codes do not incorporate a comprehensive algorithm to
+handle this task.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(rYWAASB)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">data</span>(maize)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">ranki</span>(maize)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#          GEN        Y     WAASB rY rWAASB rY+rWAASB Ranks</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co"># 1     Dracma 262.2230 0.8107018  5      3         8   1.0</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># 2    DKC6630 284.0391 2.2006718  1      8         9   2.0</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># 3      NS770 243.4864 0.3272558 10      1        11   3.0</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co"># 4  89 MAY 70 258.8993 1.9638360  6      7        13   5.0</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># 5     BOLSON 252.7882 1.1512639  8      5        13   5.0</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># 6   Sy Hydro 243.7789 0.9741668  9      4        13   5.0</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co"># 7     KSC704 234.5755 0.6564340 13      2        15   8.0</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># 8     NS6010 277.7849 3.1780198  2     13        15   8.0</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co"># 9   Sy Inove 276.2174 3.0619396  3     12        15   8.0</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co"># 10     ZP606 255.3309 2.6157585  7     10        17  10.0</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co"># 11     ZP600 265.8830 4.2201795  4     17        21  11.0</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co"># 12     BK 74 217.7637 1.2910417 16      6        22  12.0</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="co"># 13 Mv Massil 228.5190 2.2487080 14      9        23  13.0</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># 14  Barekat2 239.1610 3.7488510 11     15        26  14.0</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a><span class="co"># 15    KSC705 218.7118 3.2878162 15     14        29  15.0</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="co"># 16   DKC6589 234.7383 4.4766285 12     18        30  16.5</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co"># 17  Sy Miami 212.3417 2.7648339 19     11        30  16.5</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co"># 18     Gazda 214.8292 3.8871065 18     16        34  18.0</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co"># 19   DKC7211 215.7097 4.7286087 17     19        36  19.0</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co"># 20   DKC6101 191.8700 6.0110405 20     20        40  20.0</span></span></code></pre></div>
+<p>In the table above, the genotype with the lowest rank
+(<em>Dracma</em>) is considered the best due to its high grain yield and
+low <em>WAASB</em> score.</p>
+</div>
+<div id="draw-the-first-plot-bar_plot1" class="section level2">
+<h2>Draw the first plot <em>bar_plot1</em>:</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">data</span>(maize)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">bar_plot1</span>(maize)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Fig.2. The first biplot of the rYWASSB package</p>
+</div>
+<div id="draw-the-second-plot-bar_plot2" class="section level2">
+<h2>Draw the second plot <em>bar_plot2</em>:</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">data</span>(maize)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">bar_plot2</span>(maize)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Fig.3. The second biplot of the rYWASSB package</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-danakumara2023" class="csl-entry">
+Danakumara, Thippeswamy, Tapan Kumar, Neeraj Kumar, Basavanagouda
+Siddanagouda Patil, Chellapilla Bharadwaj, Umashankar Patel, Nilesh
+Joshi, et al. 2023. <span>“A Multi-Model Based Stability Analysis
+Employing Multi-Environmental Trials (METs) Data for Discerning Heat
+Tolerance in Chickpea (Cicer Arietinum l.) Landraces.”</span>
+<em>Plants</em> 12 (21): 3691.
+</div>
+<div id="ref-kang1988" class="csl-entry">
+Kang, M. S. 1988. <span>“A Rank-Sum Method for Selecting High-Yielding,
+Stable Corn Genotypes.”</span> <em>Cereal Research Communications</em>
+16: 113–15.
+</div>
+<div id="ref-mishra2024" class="csl-entry">
+Mishra, Smaranika, AVV Koundinya, TS Aghora, et al. 2024.
+<span>“Stability Analysis to Identify Improved Lines of Cluster Bean
+(Cyamopsis Tetragonoloba l. Taub.).”</span> <em>Plant Genetic
+Resources</em> 22 (3): 173–80.
+</div>
+<div id="ref-olivoto2019" class="csl-entry">
+Olivoto, Tiago, Alessandro DC Lúcio, José AG da Silva, Bruno G Sari, and
+Maria I Diel. 2019. <span>“Mean Performance and Stability in
+Multi-Environment Trials II: Selection Based on Multiple Traits.”</span>
+<em>Agronomy Journal</em> 111 (6): 2961–69.
+</div>
+<div id="ref-pour2022" class="csl-entry">
+Pour-Aboughadareh, Alireza, Marouf Khalili, Peter Poczai, and Tiago
+Olivoto. 2022. <span>“Stability Indices to Deciphering the
+Genotype-by-Environment Interaction (GEI) Effect: An Applicable Review
+for Use in Plant Breeding Programs.”</span> <em>Plants</em> 11 (3): 414.
+</div>
+<div id="ref-sakata2021" class="csl-entry">
+Sakata, Wakuma Merga. 2021. <span>“An Overview of Genotype x Environment
+Interaction and Yield Stability Analysis in Applied Plant Breeding:
+Great Emphasis Given to Coffee (Coffea Arabica l.).”</span>
+<em>International Journal of Agricultural Research, Innovation and
+Technology (IJARIT)</em> 11 (2): 117–23.
+</div>
+<div id="ref-swarup2014" class="csl-entry">
+SWARUP, INDU, and JAGDISH SINGH. 2014. <span>“Stability Analysis in
+Safflower (Carthamus Tinctorious l.).”</span> <em>THE INDIAN SOCIETY OF
+OILSEEDS RESEARCH</em>, 29.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
