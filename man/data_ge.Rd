@@ -3,9 +3,10 @@
 \docType{data}
 \name{data_ge}
 \alias{data_ge}
-\title{Dataset2: a tibble containing ENV, GEN, REP variables and GY(grain yield) and HM traits from the metan package.}
+\title{Dataset2: a tibble containing ENV, GEN, REP factors and
+GY(grain yield) and HM agronomic traits from the \code{metan} package.}
 \format{
-A \code{data.frame} with 420 rows in and 5 columns.
+A \code{data.frame} with 420 rows in 5 columns.
 \describe{
 \item{\code{ENV}}{a character vector}
 \item{\code{GEN}}{a character vector}
@@ -18,11 +19,18 @@ A \code{data.frame} with 420 rows in and 5 columns.
 data(data_ge)
 }
 \description{
-Dataset2: a tibble containing ENV, GEN, REP variables and GY(grain yield) and HM traits from the metan package.
+Dataset2: a tibble containing ENV, GEN, REP factors and
+GY(grain yield) and HM agronomic traits from the \code{metan} package.
 }
 \examples{
+\donttest{
 library(rYWAASB)
 data(data_ge)
-
+}
+}
+\references{
+Olivoto, T., & Lúcio, A.D.C.2020. metan: An R package for
+multi‐environment trial analysis. Methods in Ecology and Evolution
+, 11(6), 783-789.
 }
 \keyword{datasets}

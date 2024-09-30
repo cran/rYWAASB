@@ -1,0 +1,157 @@
+#' @name nbclust
+#' @title Data read and estimate the cluster number
+#' @author {
+#' Ali Arminian <abeyran@gmail.com>
+#' }
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' `nbclust()` Reads and prepares the data, and
+#'  determine the optimum number of clusters using Average
+#'  Silhouette Method by `factoextra` package.
+#' The average silhouette approach assesses the quality of
+#' clustering by evaluating how well each object fits within
+#' its cluster. A high average silhouette width signifies
+#' effective clustering. This method calculates the average
+#' silhouette for different values of k, and the optimal
+#' number of clusters (k) is the one that maximizes the
+#' average silhouette across a range of potential k values.
+#'
+#' @details
+#' The `silhouette` coefficient (SC) refers to a criterion
+#' to decide number of clusters.It is defined as follows.
+#' Though there are numerous methods determining number
+#' of clusters such as `the gap statistic` etc.
+#'
+#' \loadmathjax
+#' \mjsdeqn{SC = maxK{\bar{S}K}}.
+#'
+#' In other words, for each observation \mjseqn{i}, the
+#' `silhouette width` \mjseqn{s(i)} is defined as follows:
+#' Put \mjseqn{a(i)} = average dissimilarity between i and all
+#' other points of the cluster to which i belongs (if i is the only
+#' observation in its cluster, \mjseqn{s(i):= 0} without further
+#' calculations). For all other clusters C, put \mjseqn{d(i, C)}
+#' = average dissimilarity of i to all observations of C.
+#' The smallest of these \mjseqn{d(i, C)} is
+#' \mjseqn{b(i)=min\it(C) d(i, C)}, and can be seen as the
+#' dissimilarity between i and its “neighbor” cluster, i.e.,
+#' the nearest one to which it does not belong. Finally,
+#' \mjsdeqn{s(i)=:=\frac{b(i)-a(i)}{max(a(i), b(i))}}
+#'
+#' * Note: The clustering methods can be: "average", "centroid",
+#' "complete", "mcquitty", "median", "single", "ward.D", "ward.D2"
+#' and, Distance methods can be as: "binary", "canberra", "euclidean",
+#' "manhattan", "minkowski", "maximum", "pearson", "spearman", "kendall"
+#' which may be used in `shipunov` or `factoextra` packages.
+#' In this package we just applied `average=UPGMA` and `ward` algorithms.
+#'
+#' @param datap The data set
+#' @param verbose If `verbose = TRUE` then some results are
+#' @importFrom factoextra fviz_nbclust hcut
+#'
+#' @references
+#' Lletı, R., Ortiz, M.C., Sarabia, L.A., Sánchez, M.S. 2004.
+#' Selecting variables for k-means cluster analysis by using
+#' a genetic algorithm that optimizes the silhouettes,
+#' Analytica Chimica Acta, 515(1): 87-100.
+#'
+#' Rousseeuw, P.J. (1987) Silhouettes: A graphical aid to the
+#' interpretation and validation of cluster analysis.
+#' J. Comput. Appl. Math., 20, 53-65.
+#'
+#' https://uc-r.github.io/
+#'
+#' @return Returns a data frame
+#' @usage nbclust(datap, verbose = FALSE)
+#' @examples
+#' \donttest{
+#' library(factoextra)
+#'
+#' data(maize)
+#' maize <- as.data.frame(maize)
+#' row.names(maize) <- maize[, 1]
+#' maize[, 1] = NULL
+#' GEN <- row.names(maize)
+#' maize <- scale(maize)
+#' nbclust(maize, verbose = FALSE)
+#'
+#' # Performing bootstrap or jackknife clustering
+#' # by shipunov package. The examples should be run in the
+#' # console manually due to problems occurs in the ORPHANED
+#' # package `shipunov`.
+#' #
+#' # 1- Bootstrap clustering:
+#' # data.jb <- Jclust(maize,
+#' #   method.d = "euclidean",
+#' #    method.c = "average", n.cl = 2,
+#' #     bootstrap = TRUE)
+#' #
+#' # plot.Jclust(data.jb, top=TRUE, lab.pos=1,
+#' #  lab.offset=1, lab.col=2, lab.font=2)
+#' # Fence(data.jb$hclust, GEN)
+#' #
+#' # data.jb <- Jclust(maize,
+#' #  method.d = "euclidean",
+#' #    method.c = "ward.D", n.cl = 2,
+#' #     bootstrap = TRUE)
+#' #
+#' # plot.Jclust(data.jb, top=TRUE, lab.pos=1,
+#' #            lab.offset=1, lab.col=2, lab.font=2)
+#' # Fence(data.jb$hclust, GEN)
+#' #
+#' # if(verbose = TRUE):
+#' # cat("\nnumber of iterations:\n", data.jb$iter, "\n")
+#' #
+#' # for "bootstrap":
+#' # data.jb$mat <- as.matrix((data.jb$mat))
+#' # data.jb$mat
+#' # cat("\nmatrix of results:\n", data.jb$mat, "\n")
+#' # cat("clustering info, by eucledean distance measure:\n")
+#' # print(data.jb$hclust)
+#' # cat("groups:\n", data.jb$gr, "\n")
+#' # cat("\nsupport values:\n", data.jb$supp, "\n")
+#' # cat("\nnumber of clusters used:\n", data.jb$n.cl, "\n")
+#'
+#' # 2- Jackknife clustering:
+#' # data.jb <- Bclust(maize,
+#' #   method.d = "euclidean", method.c = "average",
+#' #    bootstrap = FALSE)
+#' # plot(data.jb)
+#' #
+#' # data.jb <- Bclust(maize,
+#' #   method.d = "euclidean", method.c = "ward.D",
+#' #    bootstrap = FALSE)
+#' # plot(data.jb)
+#' #
+#' # if(verbose = TRUE):
+#' # For"jackknife":
+#' # cat("Consensus:\n", data.jb$consensus, "\n")
+#' # cat("Vlaues:\n", data.jb$values, "\n")
+#' }
+#' @export
+
+nbclust <- function(datap, verbose = FALSE)
+{
+  datap <- data.frame(datap)
+
+  for (i in seq_along(datap))
+  {
+    if(is.numeric(datap[, i])) {
+      datap[, i][is.na(datap[, i])] <- mean(datap[, i], na.rm = TRUE)
+      datap[, i] <- as.numeric(unlist(datap[, i]))
+    }
+  }
+
+  a <- factoextra::fviz_nbclust(datap, FUNcluster = hcut,
+    method = "silhouette", nboot=1000)
+  n.cl = which(a$data$y == max(a$data$y))
+
+  class(n.cl) <- "data frame"
+
+  return(n.cl)
+
+  if(verbose) {
+    cat("The number of clusters using silhouette algorithm:", n.cl, "\n")
+  }
+}

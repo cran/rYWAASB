@@ -3,33 +3,42 @@
 \docType{data}
 \name{maize}
 \alias{maize}
-\title{Dataset1: a tibble containing GEN, Trait and WAASB index columns.}
+\title{Dataset1: a tibble containing GEN, Trait, \code{WAASB} and \code{WAASBY} indexes.}
 \format{
-A \code{data.frame} with 20 observations (genotypes) in rows in and 2 columns of the trait and WAASB index values.
+A \code{data.frame} with 20 observations (genotypes)
+within rows and columns including the trait (named as \code{Y}),
+\code{WAASB} and \code{WAASBY} indexes values.
 \describe{
-\item{\code{GEN}}{a character vector}
+\item{\code{GEN}}{a character vector saved as factor}
 \item{\code{Y}}{a numeric vector}
 \item{\code{WAASB}}{a numeric vector}
+\item{\code{WAASBY}}{a numeric vector}
+}
+The input format of table of data(NA free), here \emph{maize} data,
+should be as follows:
+
+\tabular{rrrr}{
+\strong{GEN} \tab \strong{Y} \tab \strong{WAASB} \tab \strong{WAASBY}\cr
+Dracma \tab 262.22 \tab 0.81 \tab 81.6\cr
+DKC6630 \tab 284.04 \tab 2.20 \tab 88.5\cr
+NS770 \tab 243.48 \tab 0.33 \tab 71.4\cr
+...
 }
 }
 \usage{
 data(maize)
 }
 \description{
-Dataset1: a tibble containing GEN, Trait and WAASB index columns.
+Dataset1: a tibble containing GEN, Trait, \code{WAASB} and \code{WAASBY} indexes.
 }
 \examples{
+\donttest{
 library(rYWAASB)
 data(maize)
-
-# ranking genotypes:
 ranki(maize)
-
-# first plot by ggplot2:
 bar_plot1(maize)
-
-# second plot by R:
 bar_plot2(maize)
-
+PCA_biplot(maize)
+}
 }
 \keyword{datasets}
