@@ -49,15 +49,18 @@
 #' mean performance and stability, respectively; \mjseqn{{rY_i}} and
 #' \mjseqn{{rW}_i} are the rescaled values for mean performance
 #' \mjseqn{\bar{Y_i}} and stability \mjseqn{W_i}, respectively of
-#' the genotype *i*. For the details of calculations, rescalling
+#' the genotype *i*. For the details of calculations, rescaling
 #' and mathematics notations see (Olivoto et al., 2019).
 #'
-#' Finally, \mjseqn{rYWAASB_i} index is the sum of the ranks of the trait
+#' Finally, \mjseqn{rYWAASB_i} index is the sum of the ranks
+#' (or in fact the rank of sum of ranks of  the trait and
+#' WAASB index) as follows:
 #' (\mjseqn{rY_i}) and WAASB index (\mjseqn{rWAASB_i}) for each
 #' individual:
 #'
 #' \mjsdeqn{
-#' rYWAASB_i = {rY_i} + {rWAASB_i}}.
+#' rYWAASB_i = {rY_i} + {rWAASB_i}} or: =
+#' \mjsdeqn{rank{{rY_i} + {rWAASB_i}}}.
 #'
 #' The input format of table of data(NA free), here *maize* data,
 #' should be as follows:
@@ -71,6 +74,9 @@
 #' }
 #'
 #' @param datap The data set
+#' @param lowt A parameter indicating whether lower rates of the trait
+#' is preferred or not. For grain yield e.g. Upper values is preferred. For plant height
+#' lower values e.g. is preferred.
 #' @references
 #' Olivoto, T., Lúcio, A., DC, da Silva, J.A.G., Sari, B.G.
 #' and Diel, M. 2019. Mean performance and stability in
@@ -84,15 +90,27 @@
 #' Kang, M.S. 1988. “A Rank-Sum Method for Selecting High-Yielding,
 #' Stable Corn Genotypes.” Cereal Research Communications 16: 113–15.
 #' @return Returns a data frame showing numerical rankings
-#' @usage ranki(datap)
+#' @usage ranki(datap,  lowt = FALSE)
 #' @examples
+#' # Case 1:  Higher trait values are preferred. For instance grain yield
+#' # in cereals is a trait which its higher values are preferred and ranking
+#' # is performed from the higher to lower values i.e. 1st, 2nd, 3rd etc
+#' # in maize dataset.
 #' \donttest{
 #' data(maize)
-#' ranki(maize)
+#' ranki(maize) # or: ranki(maize, lowt = FALSE)
+#' }
+#' @examples
+#' # Case 2:  In this case, the lower values of the given trait are preferred.
+#' # For instance days to maturity (dm) and plant height are traits where their
+#' # lower values are preferred.
+#' \donttest{
+#' data(dm)
+#' ranki(dm, lowt = TRUE)
 #' }
 #' @export
 
-ranki <- function(datap)
+ranki <- function(datap, lowt = FALSE)
 {
   datap <- data.frame(datap)
 
@@ -106,9 +124,14 @@ ranki <- function(datap)
 
   n = length(datap)
   datap$GEN <- factor(datap$GEN, levels = datap$GEN)
-  datap$rY <- rank(-datap$Y, na.last = NA, ties.method = "average")
+  if (lowt) {
+    datap$rY <- rank(datap$Y, na.last = NA, ties.method = "average")
+    datap$rWAASBY <- rank(datap$WAASBY, na.last = NA, ties.method = "average")
+  } else {
+    datap$rY <- rank(-datap$Y, na.last = NA, ties.method = "average")
+    datap$rWAASBY <- rank(-datap$WAASBY, na.last = NA, ties.method = "average")
+  }
   datap$rWAASB <- rank(datap$WAASB, na.last = NA, ties.method = "average")
-  datap$rWAASBY <- rank(-datap$WAASBY, na.last = NA, ties.method = "average")
   datap$"rY+rWAASB" <- datap$rY +  datap$rWAASB
   datap$rYWAASB <- rank(datap$"rY+rWAASB", na.last = NA, ties.method = "average")
 

@@ -4,10 +4,14 @@
 \alias{bar_plot1}
 \title{The first barplot of the ranks of genotypes}
 \usage{
-bar_plot1(datap)
+bar_plot1(datap, lowt = FALSE)
 }
 \arguments{
 \item{datap}{The data set}
+
+\item{lowt}{A parameter indicating whether lower rates of the trait
+is preferred or not. For grain yield e.g. Upper values is preferred. For plant height
+lower values e.g. is preferred.}
 }
 \value{
 Returns an object of class \verb{gg, ggmatrix}.
@@ -21,9 +25,20 @@ trait and WAASB index using ggplot2.
 }
 }
 \examples{
+# Case 1:  Higher trait values are preferred. For instance grain yield
+# in cereals is a trait which its higher values are preferred and ranking
+# is performed from the higher to lower values i.e. 1st, 2nd, 3rd etc
+# in maize dataset.
 \donttest{
 data(maize)
-bar_plot1(maize)
+bar_plot1(maize) # or: bar_plot1(maize, lowt = FALSE)
+}
+# Case 2:  In this case, the lower values of the given trait are preferred.
+# For instance days to maturity (dm) and plant height are traits where their
+# lower values are preferred.
+\donttest{
+data(dm)
+bar_plot1(dm, lowt = TRUE)
 }
 }
 \references{

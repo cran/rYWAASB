@@ -36,14 +36,15 @@
 #' The techniques used in a biplot typically involve an eigen
 #' decomposition, similar to the one used in PCA. It is common
 #' for the biplot to be conducted using mean-centered and scaled
-#' data(2).
-#'
+#' data(2). For scaling variables, the data can be transformed as follow:
+#' \mjsdeqn{z = \frac{x-\bar{x}}{s(x)}}
+#' where 's(x)' denotes the sample standard deviation of 'x' parameter, calculated as:
+#' \mjsdeqn{s = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2}}
 #' *Algebra of PCA:*
 #' As Johnson and Wichern (2007) stated(3), if the random vector
 #' \mjseqn{\mathbf{X'} = \{X_1, X_2,...,X_p \}} have the
 #' covariance matrix \mjseqn{\sum} with eigenvalues
-#' \mjseqn{
-#' \lambda_1 \ge \lambda_2 \ge ... \ge \lambda_p \ge 0}.
+#' \mjseqn{\lambda_1 \ge \lambda_2 \ge ... \ge \lambda_p \ge 0}.
 #'
 #' Regarding the linear combinations:
 #' \mjsdeqn{Y_1 = a'_1X = a_{11}X_1 + a_{12}X_2 + ... + a_{1P}X_p }
@@ -96,17 +97,27 @@
 #' And before PCA the data should be centered, generally.
 #'
 #' @param datap The data set
+#' @param lowt A parameter indicating whether lower rates of the trait
+#' is preferred or not. For grain yield e.g. Upper values is preferred. For plant height
+#' lower values e.g. is preferred.
 #' @importFrom FactoMineR PCA
 #' @importFrom graphics par
 #' @importFrom stats setNames
 #' @importFrom factoextra get_eigenvalue fviz_eig fviz_pca_biplot get_pca_var
 #' @return Returns a a list of dataframes
-#' @usage PCA_biplot(datap)
+#' @usage PCA_biplot(datap, lowt = FALSE)
 #'
 #' @examples
+#' # Case 1: for maize dataset, grain yield
 #' \donttest{
 #' data(maize)
-#' PCA_biplot(maize)
+#' PCA_biplot(maize) # or: PCA_biplot(maize, lowt = FALSE)
+#' }
+#' @examples
+#' # Case 2: for days to maturity (dm) trait of chickpea
+#' \donttest{
+#' data(dm)
+#' PCA_biplot(dm, lowt = TRUE)
 #' }
 #' @references
 #' (1) <https://builtin.com>
@@ -119,9 +130,12 @@
 #'
 #' @export
 
-PCA_biplot <- function(datap)
+PCA_biplot <- function(datap, lowt = FALSE)
 {
-  datap <- ranki(datap)
+  if (lowt) {
+    datap <- ranki(datap, lowt = TRUE) } else {
+      datap <- ranki(datap)
+    }
 
   row.names(datap) <- datap$GEN
   datap[, 1] <- NULL
@@ -132,8 +146,6 @@ PCA_biplot <- function(datap)
   var <- get_pca_var(res.pca)
 
   eignv <- factoextra::get_eigenvalue(res.pca)
-
-  fvzeign <- factoextra::fviz_eig(res.pca, addlabels = TRUE, ylim = c(0, 50))
 
   varout <- list(var$coord, var$cos2, var$contrib, eignv)
   class(varout) <- "list"
@@ -146,17 +158,32 @@ PCA_biplot <- function(datap)
   par(mar=rep(1, 4))
   on.exit(par(old.par))
 
+  # scree plot
+  p1 <- factoextra::fviz_eig(res.pca, addlabels = TRUE)
+  print(p1)
+
+
+  # Biplot of individuals and variables
   p1 <- factoextra::fviz_pca_biplot(res.pca, axes = c(1, 2), geom = c("point", "text"), geom.ind = c("point", "text"), geom.var = c("arrow", "text"), col.ind = "black", fill.ind = "white", col.var = "red", fill.var = "white", gradient.cols = NULL, label = "all", invisible = "none", repel = TRUE, habillage = "none", palette = NULL, addEllipses = FALSE)
   print(p1)
 
 
+  # Control variable colors using their contributions
+  p1 <- factoextra::fviz_pca_var(res.pca, axes = c(1, 2), geom = c("point", "text"), geom.ind = c("point", "text"), geom.var = c("arrow", "text"), col.ind = "black", fill.ind = "white", col.var = "contrib", fill.var = "white", gradient.cols = c("white", "blue", "red"), ggtheme = theme_minimal())
+  print(p1)
 
-  p2 <- factoextra::fviz_pca_var(res.pca, axes = c(1, 2), geom = c("point", "text"), geom.ind = c("point", "text"), geom.var = c("arrow", "text"), col.ind = "black", fill.ind = "white", col.var = "contrib", fill.var = "white", gradient.cols = c("white", "blue", "red"), ggtheme = theme_minimal())
-  print(p2)
+
+  # Contributions of variables to PC1
+  p1 <- factoextra::fviz_contrib(res.pca, choice = "var", axes = 1)
+  print(p1)
+
+  # Contributions of variables to PC2
+  p1 <- factoextra::fviz_contrib(res.pca, choice = "var", axes = 2)
+  print(p1)
 
 
-
-  p3 <- factoextra::fviz_pca_ind(res.pca, col.ind="cos2", geom = c("point", "text"), gradient.cols = c("white", "#2E9FDF", "#FC4E07" ))
-  print(p3)
+  # Graph of individuals
+  p1 <- factoextra::fviz_pca_ind(res.pca, col.ind="cos2", geom = c("point", "text"), gradient.cols = c("white", "#2E9FDF", "#FC4E07" ))
+  print(p1)
 
 }

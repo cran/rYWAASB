@@ -3,7 +3,7 @@
 \docType{data}
 \name{data_ge}
 \alias{data_ge}
-\title{Dataset2: a tibble containing ENV, GEN, REP factors and
+\title{Dataset3: a tibble containing ENV, GEN, REP factors and
 GY(grain yield) and HM agronomic traits from the \code{metan} package.}
 \format{
 A \code{data.frame} with 420 rows in 5 columns.
@@ -19,7 +19,7 @@ A \code{data.frame} with 420 rows in 5 columns.
 data(data_ge)
 }
 \description{
-Dataset2: a tibble containing ENV, GEN, REP factors and
+Dataset3: a tibble containing ENV, GEN, REP factors and
 GY(grain yield) and HM agronomic traits from the \code{metan} package.
 }
 \examples{

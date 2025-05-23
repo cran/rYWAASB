@@ -39,21 +39,33 @@ plot_scores(waasb_model, type = 3)
 data(maize)
 head(maize)
 
-## ----apply package by ranking the genotypes-----------------------------------
+## ----apply package by ranking the genotypes for maize data--------------------
 data(maize)
-ranki(maize)
+ranki(maize) # or: ranki(maize, lowt = FALSE)
+
+## ----apply package by ranking the genotypes for dm data-----------------------
+data(dm)
+ranki(dm, lowt = TRUE)
 
 ## ----echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F----
 data(maize)
-bar_plot1(maize)
+bar_plot1(maize) # or: bar_plot1(maize, lowt = FALSE)
+
+## ----echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F----
+data(dm)
+bar_plot1(dm, lowt = TRUE)
 
 ## ----echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F----
 data(maize)
-bar_plot2(maize, verbose=TRUE)
+bar_plot2(maize) # or: bar_plot2(maize, lowt = FALSE, verbose = FALSE)
 
 ## ----echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F----
 data(maize)
-PCA_biplot(maize)
+PCA_biplot(maize) # or: PCA_biplot(maize, lowt = FALSE)
+
+## ----echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F----
+data(dm)
+PCA_biplot(dm, lowt = TRUE)
 
 ## ----echo = TRUE, fig.height = 15, fig.width = 30, fig.align = "center", message=F, warning=F----
  data(maize)
@@ -68,6 +80,7 @@ PCA_biplot(maize)
  # The examples should be run in the console manually due to 
  # problems occurs in the ORPHANED package "shipunov".
  #
+ # library(shipunov) # recalling the shipunov package
  # 1- Bootstrap clustering:
  # data.jb <- Jclust(maize,
  #  method.d = "euclidean",

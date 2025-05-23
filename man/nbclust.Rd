@@ -17,7 +17,7 @@ Returns a data frame
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-\code{nbclust()} Reads and prepares the data, and
+\code{nbclust()} reads and prepares the data, and
 determine the optimum number of clusters using Average
 Silhouette Method by \code{factoextra} package.
 The average silhouette approach assesses the quality of
@@ -48,20 +48,19 @@ The smallest of these \mjseqn{d(i, C)} is
 \mjseqn{b(i)=min\it(C) d(i, C)}, and can be seen as the
 dissimilarity between i and its “neighbor” cluster, i.e.,
 the nearest one to which it does not belong. Finally,
-\mjsdeqn{s(i)=:=\frac{b(i)-a(i)}{max(a(i), b(i))}}
+\mjsdeqn{s(i)=\frac{b(i)-a(i)}{max(a(i), b(i))}}
 \itemize{
 \item Note: The clustering methods can be: "average", "centroid",
 "complete", "mcquitty", "median", "single", "ward.D", "ward.D2"
 and, Distance methods can be as: "binary", "canberra", "euclidean",
 "manhattan", "minkowski", "maximum", "pearson", "spearman", "kendall"
 which may be used in \code{shipunov} or \code{factoextra} packages.
-In this package we just applied \code{average=UPGMA} and \code{ward} algorithms.
+In this package we just applied \code{average=UPGMA} and \code{ward.D} algorithms.
 }
 }
 \examples{
 \donttest{
 library(factoextra)
-
 data(maize)
 maize <- as.data.frame(maize)
 row.names(maize) <- maize[, 1]
@@ -75,6 +74,7 @@ nbclust(maize, verbose = FALSE)
 # console manually due to problems occurs in the ORPHANED
 # package `shipunov`.
 #
+# library(shipunov)
 # 1- Bootstrap clustering:
 # data.jb <- Jclust(maize,
 #   method.d = "euclidean",

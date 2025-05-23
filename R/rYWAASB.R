@@ -19,7 +19,7 @@
 NULL
 #'
 #'
-#' Dataset1: a tibble containing GEN, Trait, `WAASB` and `WAASBY` indexes.
+#' Dataset1: a tibble containing GEN, Trait(here grain yield), `WAASB` and `WAASBY` indexes.
 #' @name maize
 #' @docType data
 #' @usage data(maize)
@@ -55,7 +55,33 @@ NULL
 #' }
 NULL
 
-#' Dataset2: a tibble containing ENV, GEN, REP factors and
+#' Dataset2: a tibble containing GEN, Trait (days to maturity), `WAASB` and `WAASBY` indexes.
+#' @name dm
+#' @docType data
+#' @usage data(dm)
+#' @keywords datasets
+#' @format A `data.frame` with 13 observations (chickpea genotypes)
+#' within rows and columns including the trait i.e. days to maturity (named as `Y`),
+#' `WAASB` and `WAASBY` indexes values.
+#' \describe{
+#' \item{`GEN`}{a character vector saved as factor}
+#' \item{`Y`}{a numeric vector}
+#' \item{`WAASB`}{a numeric vector}
+#' \item{`WAASBY`}{a numeric vector}
+#' }
+#'
+#' @examples
+#' \donttest{
+#' library(rYWAASB)
+#' data(dm)
+#' ranki(dm)
+#' bar_plot1(dm)
+#' bar_plot2(dm)
+#' PCA_biplot(dm)
+#' }
+NULL
+
+#' Dataset3: a tibble containing ENV, GEN, REP factors and
 #' GY(grain yield) and HM agronomic traits from the `metan` package.
 #' @name data_ge
 #' @docType data
@@ -69,6 +95,7 @@ NULL
 #' \item{`GY`}{a numeric vector}
 #' \item{`HM`}{a numeric vector}
 #' }
+#'
 #' @examples
 #' \donttest{
 #' library(rYWAASB)

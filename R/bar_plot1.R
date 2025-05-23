@@ -10,13 +10,28 @@
 #' for individuals) for simultaneous selection of genotypes by
 #' trait and WAASB index using ggplot2.
 #' @param datap The data set
+#' @param lowt A parameter indicating whether lower rates of the trait
+#' is preferred or not. For grain yield e.g. Upper values is preferred. For plant height
+#' lower values e.g. is preferred.
 #' @import ggplot2
 #' @return Returns an object of class `gg, ggmatrix`.
-#' @usage bar_plot1(datap)
+#' @usage bar_plot1(datap, lowt = FALSE)
 #' @examples
+#' # Case 1:  Higher trait values are preferred. For instance grain yield
+#' # in cereals is a trait which its higher values are preferred and ranking
+#' # is performed from the higher to lower values i.e. 1st, 2nd, 3rd etc
+#' # in maize dataset.
 #' \donttest{
 #' data(maize)
-#' bar_plot1(maize)
+#' bar_plot1(maize) # or: bar_plot1(maize, lowt = FALSE)
+#' }
+#' @examples
+#' # Case 2:  In this case, the lower values of the given trait are preferred.
+#' # For instance days to maturity (dm) and plant height are traits where their
+#' # lower values are preferred.
+#' \donttest{
+#' data(dm)
+#' bar_plot1(dm, lowt = TRUE)
 #' }
 #' @references
 #' H. Wickham. ggplot2: Elegant Graphics for Data Analysis.
@@ -25,9 +40,12 @@
 
 
 
-bar_plot1 <- function(datap)
+bar_plot1 <- function(datap, lowt = FALSE)
 {
+  if (lowt) {
+  datap <- ranki(datap, lowt = TRUE) } else {
   datap <- ranki(datap)
+  }
 
   x <- datap$GEN; y= datap$rYWAASB
 

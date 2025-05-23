@@ -6,7 +6,7 @@
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' `nbclust()` Reads and prepares the data, and
+#' `nbclust()` reads and prepares the data, and
 #'  determine the optimum number of clusters using Average
 #'  Silhouette Method by `factoextra` package.
 #' The average silhouette approach assesses the quality of
@@ -37,14 +37,14 @@
 #' \mjseqn{b(i)=min\it(C) d(i, C)}, and can be seen as the
 #' dissimilarity between i and its “neighbor” cluster, i.e.,
 #' the nearest one to which it does not belong. Finally,
-#' \mjsdeqn{s(i)=:=\frac{b(i)-a(i)}{max(a(i), b(i))}}
+#' \mjsdeqn{s(i)=\frac{b(i)-a(i)}{max(a(i), b(i))}}
 #'
 #' * Note: The clustering methods can be: "average", "centroid",
 #' "complete", "mcquitty", "median", "single", "ward.D", "ward.D2"
 #' and, Distance methods can be as: "binary", "canberra", "euclidean",
 #' "manhattan", "minkowski", "maximum", "pearson", "spearman", "kendall"
 #' which may be used in `shipunov` or `factoextra` packages.
-#' In this package we just applied `average=UPGMA` and `ward` algorithms.
+#' In this package we just applied `average=UPGMA` and `ward.D` algorithms.
 #'
 #' @param datap The data set
 #' @param verbose If `verbose = TRUE` then some results are
@@ -67,7 +67,6 @@
 #' @examples
 #' \donttest{
 #' library(factoextra)
-#'
 #' data(maize)
 #' maize <- as.data.frame(maize)
 #' row.names(maize) <- maize[, 1]
@@ -81,6 +80,7 @@
 #' # console manually due to problems occurs in the ORPHANED
 #' # package `shipunov`.
 #' #
+#' # library(shipunov)
 #' # 1- Bootstrap clustering:
 #' # data.jb <- Jclust(maize,
 #' #   method.d = "euclidean",
@@ -146,6 +146,7 @@ nbclust <- function(datap, verbose = FALSE)
   a <- factoextra::fviz_nbclust(datap, FUNcluster = hcut,
     method = "silhouette", nboot=1000)
   n.cl = which(a$data$y == max(a$data$y))
+  print(a)
 
   class(n.cl) <- "data frame"
 

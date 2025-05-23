@@ -4,10 +4,14 @@
 \alias{PCA_biplot}
 \title{The PCA biplot with loadings}
 \usage{
-PCA_biplot(datap)
+PCA_biplot(datap, lowt = FALSE)
 }
 \arguments{
 \item{datap}{The data set}
+
+\item{lowt}{A parameter indicating whether lower rates of the trait
+is preferred or not. For grain yield e.g. Upper values is preferred. For plant height
+lower values e.g. is preferred.}
 }
 \value{
 Returns a a list of dataframes
@@ -46,14 +50,15 @@ the rows and columns.
 The techniques used in a biplot typically involve an eigen
 decomposition, similar to the one used in PCA. It is common
 for the biplot to be conducted using mean-centered and scaled
-data(2).
-
+data(2). For scaling variables, the data can be transformed as follow:
+\mjsdeqn{z = \frac{x-\bar{x}}{s(x)}}
+where 's(x)' denotes the sample standard deviation of 'x' parameter, calculated as:
+\mjsdeqn{s = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2}}
 \emph{Algebra of PCA:}
 As Johnson and Wichern (2007) stated(3), if the random vector
 \mjseqn{\mathbf{X'} = \{X_1, X_2,...,X_p \}} have the
 covariance matrix \mjseqn{\sum} with eigenvalues
-\mjseqn{
-\lambda_1 \ge \lambda_2 \ge ... \ge \lambda_p \ge 0}.
+\mjseqn{\lambda_1 \ge \lambda_2 \ge ... \ge \lambda_p \ge 0}.
 
 Regarding the linear combinations:
 \mjsdeqn{Y_1 = a'_1X = a_{11}X_1 + a_{12}X_2 + ... + a_{1P}X_p }
@@ -107,9 +112,15 @@ Please note that PCA can be performed on \code{Covariance} or
 And before PCA the data should be centered, generally.
 }
 \examples{
+# Case 1: for maize dataset, grain yield
 \donttest{
 data(maize)
-PCA_biplot(maize)
+PCA_biplot(maize) # or: PCA_biplot(maize, lowt = FALSE)
+}
+# Case 2: for days to maturity (dm) trait of chickpea
+\donttest{
+data(dm)
+PCA_biplot(dm, lowt = TRUE)
 }
 }
 \references{

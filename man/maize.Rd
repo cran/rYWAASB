@@ -3,7 +3,7 @@
 \docType{data}
 \name{maize}
 \alias{maize}
-\title{Dataset1: a tibble containing GEN, Trait, \code{WAASB} and \code{WAASBY} indexes.}
+\title{Dataset1: a tibble containing GEN, Trait(here grain yield), \code{WAASB} and \code{WAASBY} indexes.}
 \format{
 A \code{data.frame} with 20 observations (genotypes)
 within rows and columns including the trait (named as \code{Y}),
@@ -29,7 +29,7 @@ NS770 \tab 243.48 \tab 0.33 \tab 71.4\cr
 data(maize)
 }
 \description{
-Dataset1: a tibble containing GEN, Trait, \code{WAASB} and \code{WAASBY} indexes.
+Dataset1: a tibble containing GEN, Trait(here grain yield), \code{WAASB} and \code{WAASBY} indexes.
 }
 \examples{
 \donttest{

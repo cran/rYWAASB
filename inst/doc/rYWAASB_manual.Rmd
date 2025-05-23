@@ -114,18 +114,35 @@ head(maize)
 ## Applying the **rYWAASB** package. Ranking table:
 We recommend that users address (handle/overcome/substitute) any missing data in their inputs before proceeding with analyses. This is because the rank codes do not incorporate a comprehensive algorithm to handle this task.
 
-```{r apply package by ranking the genotypes}
+Case 1. Higher trait values are preferred. For instance grain yield in cereals is a trait which its higher values are preferred and ranking is performed from the higher to lower values i.e. 1st, 2nd, 3rd etc in maize dataset.
+
+```{r apply package by ranking the genotypes for maize data}
 data(maize)
-ranki(maize)
+ranki(maize) # or: ranki(maize, lowt = FALSE)
 ```
 In the table above, the genotype with the lowest rank (*Dracma*) is considered the best due to its high grain yield and low *WAASB* score.
 
+Case 2. 
+In this case, the lower values of the given trait are preferred. For instance days to maturity and plant height are traits where their lower values are preferred.
+
+```{r apply package by ranking the genotypes for dm data}
+data(dm)
+ranki(dm, lowt = TRUE)
+```
 
 ## Drawing the first plot *bar_plot1*:
+case 1. *maize* dataset:
 ```{r  echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F}
 data(maize)
-bar_plot1(maize)
+bar_plot1(maize) # or: bar_plot1(maize, lowt = FALSE)
 ```
+
+case 2. *dm* dataset:
+```{r  echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F}
+data(dm)
+bar_plot1(dm, lowt = TRUE)
+```
+
 
 Fig.2. The first barplot of the `rYWASSB` package
 
@@ -133,23 +150,30 @@ Fig.2. The first barplot of the `rYWASSB` package
 ## Drawing the second plot *bar_plot2*:
 ```{r  echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F}
 data(maize)
-bar_plot2(maize, verbose=TRUE)
+bar_plot2(maize) # or: bar_plot2(maize, lowt = FALSE, verbose = FALSE)
 ```
 
 Fig.3. The second barplot of the `rYWASSB` package
 
-
 ## Performing PCA and textual and graphical representations (scree plot and PCA-dependent biplots (3 plots))
+case 1. For grain yield data:
 
 ```{r  echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F}
 data(maize)
-PCA_biplot(maize)
+PCA_biplot(maize) # or: PCA_biplot(maize, lowt = FALSE)
 ```
 
 Figs.4-6. The PCA biplot with loadings for compare genotypes
 
+Case 2. For days to maturity data:
+```{r  echo = TRUE, fig.height = 14, fig.width = 20, fig.align = "center", message=F, warning=F}
+data(dm)
+PCA_biplot(dm, lowt = TRUE)
+```
 
-## Designing the cluster analysis on data and define the optimum number of clusters uning `The Average Silhouette Method`. The details of this method is given in the *description* and *details* parts of the function `h_clust()`. For running the cluster analysis by menas of `shipunov` package (courtesy of late professor Alexy Shipunov) act as:
+Figs.7-9. The PCA biplot with loadings for compare genotypes
+
+## Designing the cluster analysis on data and define the optimum number of clusters uning `The Average Silhouette Method`. The details of this method is given in the *description* and *details* parts of the function `nbclust()`. For running the cluster analysis by menas of `shipunov` package (courtesy of late professor Alexy Shipunov) act as:
 
 
 
@@ -166,6 +190,7 @@ Figs.4-6. The PCA biplot with loadings for compare genotypes
  # The examples should be run in the console manually due to 
  # problems occurs in the ORPHANED package "shipunov".
  #
+ # library(shipunov) # recalling the shipunov package
  # 1- Bootstrap clustering:
  # data.jb <- Jclust(maize,
  #  method.d = "euclidean",
@@ -216,6 +241,6 @@ Figs.4-6. The PCA biplot with loadings for compare genotypes
 ```
 
 
-Figures 7-10. Cluster analysis by 1000 bootstrap iterations and determine optimum N clusters using The Average Silhouette algorithm.
+Figures 10-12 Cluster analysis by 1000 bootstrap iterations and determine optimum N clusters using The Average Silhouette algorithm.
 
 # References

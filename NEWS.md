@@ -1,3 +1,8 @@
+# rYWAASB 0.3
+## Changes:
+* scree plot added.
+* lowt parameter added to ranki() function showing the preference of the order of the trait.
+
 # rYWAASB 0.2
 ## Changes:
 * Hierarchical cluster categorization of observations added along with determining the cluster number by `Average Silhouette Method` algorithm enforced with bootstrap and jakknife iterations. 

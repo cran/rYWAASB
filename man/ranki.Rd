@@ -4,10 +4,14 @@
 \alias{ranki}
 \title{The values and ranks of genotypes}
 \usage{
-ranki(datap)
+ranki(datap,  lowt = FALSE)
 }
 \arguments{
 \item{datap}{The data set}
+
+\item{lowt}{A parameter indicating whether lower rates of the trait
+is preferred or not. For grain yield e.g. Upper values is preferred. For plant height
+lower values e.g. is preferred.}
 }
 \value{
 Returns a data frame showing numerical rankings
@@ -58,15 +62,18 @@ WAASBY_i=\frac{\left({rY}_i\times\theta_Y\right)+
 mean performance and stability, respectively; \mjseqn{{rY_i}} and
 \mjseqn{{rW}_i} are the rescaled values for mean performance
 \mjseqn{\bar{Y_i}} and stability \mjseqn{W_i}, respectively of
-the genotype \emph{i}. For the details of calculations, rescalling
+the genotype \emph{i}. For the details of calculations, rescaling
 and mathematics notations see (Olivoto et al., 2019).
 
-Finally, \mjseqn{rYWAASB_i} index is the sum of the ranks of the trait
+Finally, \mjseqn{rYWAASB_i} index is the sum of the ranks
+(or in fact the rank of sum of ranks of  the trait and
+WAASB index) as follows:
 (\mjseqn{rY_i}) and WAASB index (\mjseqn{rWAASB_i}) for each
 individual:
 
 \mjsdeqn{
-rYWAASB_i = {rY_i} + {rWAASB_i}}.
+rYWAASB_i = {rY_i} + {rWAASB_i}} or: =
+\mjsdeqn{rank{{rY_i} + {rWAASB_i}}}.
 
 The input format of table of data(NA free), here \emph{maize} data,
 should be as follows:
@@ -80,9 +87,20 @@ NS770 \tab 243.48 \tab 0.33 \tab 71.4\cr
 }
 }
 \examples{
+# Case 1:  Higher trait values are preferred. For instance grain yield
+# in cereals is a trait which its higher values are preferred and ranking
+# is performed from the higher to lower values i.e. 1st, 2nd, 3rd etc
+# in maize dataset.
 \donttest{
 data(maize)
-ranki(maize)
+ranki(maize) # or: ranki(maize, lowt = FALSE)
+}
+# Case 2:  In this case, the lower values of the given trait are preferred.
+# For instance days to maturity (dm) and plant height are traits where their
+# lower values are preferred.
+\donttest{
+data(dm)
+ranki(dm, lowt = TRUE)
 }
 }
 \references{
