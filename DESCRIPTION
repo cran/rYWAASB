@@ -1,8 +1,8 @@
 Package: rYWAASB
 Type: Package
 Title: Simultaneous Selection by Trait and WAASB Index
-Version: 0.3
-Date: 2025-05-22.
+Version: 0.4
+Date: 2026-06-10.
 Authors@R: 
     person(family="Arminian", given ="Ali", email="abeyran@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-4749-6085"))
 Maintainer: Ali Arminian <abeyran@gmail.com>
@@ -18,13 +18,13 @@ VignetteBuilder: knitr
 RdMacros: mathjaxr
 Encoding: UTF-8
 Copyright: Ali Arminian
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Language: en-US
 LazyData: true
 LazyLoad: true
 NeedsCompilation: no
 Author: Ali Arminian [aut, cre, cph] (ORCID:
     <https://orcid.org/0000-0003-4749-6085>)
-Packaged: 2025-05-23 10:40:14 UTC; Administrator
+Packaged: 2026-06-10 07:18:05 UTC; a.arminian
 Repository: CRAN
-Date/Publication: 2025-05-23 11:02:02 UTC
+Date/Publication: 2026-06-10 08:40:02 UTC

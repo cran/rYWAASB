@@ -1,3 +1,7 @@
+# rYWAASB 0.4
+## Changes:
+* The title of output columns in "ranki.R" code corrected from "rWAASB, rWAASBY" to "rWAASBY, rWAASB".
+
 # rYWAASB 0.3
 ## Changes:
 * scree plot added.

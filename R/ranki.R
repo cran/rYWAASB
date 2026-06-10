@@ -135,7 +135,7 @@ ranki <- function(datap, lowt = FALSE)
   datap$"rY+rWAASB" <- datap$rY +  datap$rWAASB
   datap$rYWAASB <- rank(datap$"rY+rWAASB", na.last = NA, ties.method = "average")
 
-  colnames(datap) <- c("GEN", "Y=Trait", "WAASB", "WAASBY", "rY", "rWAASB", "rWAASBY", "rY+rWAASB", "rYWAASB")
+  colnames(datap) <- c("GEN", "Y=Trait", "WAASB", "WAASBY", "rY", "rWAASBY", "rWAASB", "rY+rWAASB", "rYWAASB")
 
   class(ranki) <- "data.frame"
 
