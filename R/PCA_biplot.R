@@ -4,7 +4,7 @@
 #' Ali Arminian <abeyran@gmail.com>
 #' }
 #' @description
-#' `r lifecycle::badge("stable")`
+#' `r badge('stable')`
 #'
 #' * `PCA_biplot()` creates the PCA (Principal Component
 #'  Analysis) biplot with loadings for the new index `rYWAASB`
@@ -22,6 +22,7 @@
 #' trends(1).
 #' According to Johnson and Wichern (2007), a PCA explains
 #' the var-covar structure of a set of variables
+#'
 #' \loadmathjax
 #' \mjseqn{X_1, X_2, ..., X_p} with a less `linear`
 #' combinations of such variables. Moreover the common

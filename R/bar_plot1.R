@@ -4,7 +4,7 @@
 #' Ali Arminian <abeyran@gmail.com>
 #' }
 #' @description
-#' `r lifecycle::badge("stable")`
+#' `r badge('stable')`
 #'
 #' * `bar_plot1()` creates a bar plot for the new index (rYWAASB
 #' for individuals) for simultaneous selection of genotypes by

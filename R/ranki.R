@@ -4,7 +4,7 @@
 #' Ali Arminian <abeyran@gmail.com>
 #' }
 #' @description
-#' `r lifecycle::badge("stable")`
+#' `r badge('stable')`
 #'
 #' `ranki()` function ranks the genotypes (or entries) based on
 #' a new index utilizing the given trait and "WAASB" index to

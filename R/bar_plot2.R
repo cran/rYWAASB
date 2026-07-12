@@ -4,7 +4,7 @@
 #' Ali Arminian <abeyran@gmail.com>
 #' }
 #' @description
-#' `r lifecycle::badge("stable")`
+#' `r badge('stable')`
 #'
 #' * `bar_plot2()` creates the 2nd barplot of the ranks of genotypes
 #' using the `graphics` package.

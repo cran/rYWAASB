@@ -1,3 +1,6 @@
+# rYWAASB 0.4.1
+* Corrected dependencies issues for "lifecycle", "mathjaxr" packages.
+
 # rYWAASB 0.4
 ## Changes:
 * The title of output columns in "ranki.R" code corrected from "rWAASB, rWAASBY" to "rWAASBY, rWAASB".

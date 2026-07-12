@@ -36,6 +36,7 @@ a smaller set that preserves significant patterns and
 trends(1).
 According to Johnson and Wichern (2007), a PCA explains
 the var-covar structure of a set of variables
+
 \loadmathjax
 \mjseqn{X_1, X_2, ..., X_p} with a less \code{linear}
 combinations of such variables. Moreover the common

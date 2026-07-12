@@ -4,7 +4,7 @@
 #' Ali Arminian <abeyran@gmail.com>
 #' }
 #' @description
-#' `r lifecycle::badge("experimental")`
+#' `r badge('experimental')`
 #'
 #' `nbclust()` reads and prepares the data, and
 #'  determine the optimum number of clusters using Average
