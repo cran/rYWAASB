@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 
 ## 1-Introduction
-`I dedicate this package to my colleague, Professor Dr. Manjit S. Kang, a great biostatistician and quantitative geneticist, who passed away recently and has devoted his life to PLANT BREEDING science and has provided me with invaluable supports!.`
+`I dedicate this package to my late colleague, Professor Dr. Manjit S. Kang, a great biostatistician and quantitative geneticist, who passed away recently and has devoted his life to PLANT BREEDING science and has provided me with invaluable supports!.`
 
  **Stability analysis** is crucial in plant breeding to select superior genotypes that perform consistently across different environments. Several models and methods have been developed for this purpose, including Additive Main Effect and Multiplicative Interaction (*AMMI*), Weighted Average of Absolute Scores (*WAASB*), and Genotype plus Genotype-Environment (*GGE*) interactions in multi-environmental trials (*MET*) [@mishra2024; @sakata2021; @pour2022; @danakumara2023]. These analyses help breeders identify genotypes with stable performance and adaptability under varying conditions, leading to optimal yield stability and successful crop production. Utilizing these stability analysis tools, breeders can navigate the complexities of genotype-environment interactions and select genotypes that consistently excel across different locations and seasons, ensuring the development of resilient and high-performing plant varieties [@swarup2014].
 

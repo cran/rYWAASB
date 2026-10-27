@@ -1,4 +1,9 @@
+# rYWAASB 0.4.2
+## Changes:
+* Updated the aesthetics of "bar_plot1" and "bar_plot2".
+
 # rYWAASB 0.4.1
+## Changes:
 * Corrected dependencies issues for "lifecycle", "mathjaxr" packages.
 
 # rYWAASB 0.4
